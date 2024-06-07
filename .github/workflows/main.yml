@@ -1,10 +1,31 @@
-- name: Vite Github Pages Deployer
-  uses: skywarth/vite-github-pages-deployer@v1.4.0
-  with:
-    public_base_path: '' # Specify the base path of your project if needed
-    build_path: './dist' # Path to the build output directory
-    install_phase_node_env: 'dev' # Node environment for the install phase
-    build_phase_node_env: 'production' # Node environment for the build phase
-    package_manager: 'npm' # Package manager to use (npm or yarn)
-    artifact_name: 'github-pages' # Name for the artifact
-    debug_mode: false # Enable or disable debug mode
+name: Vite GitHub Pages Deployer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
