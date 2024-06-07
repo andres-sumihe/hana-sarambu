@@ -2,8 +2,7 @@ name: Vite GitHub Pages Deployer V1.0
 
 on:
   push:
-    branches:
-      - main
+    branches: ["master", "main"]
 
 jobs:
   build-and-deploy:
