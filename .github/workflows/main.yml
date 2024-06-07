@@ -1,4 +1,4 @@
-name: Vite GitHub Pages Deployer
+name: Vite GitHub Pages Deployer V1.0
 
 on:
   push:
